@@ -23,7 +23,4 @@ exports.route = function (app) {
 	//app.get('/admin/signup',mainControl.signup);
 	app.get('/admin/signup/add',main.adminAdd);
 	app.get('/donate', api.donate);
-	app.get('/startWriteRealtimeUsage', api.startWriteRealtimeUsage);
-	app.get('/stopWriteRealtimeUsage', api.stopWriteRealtimeUsage);
-	app.get('/test', api.testApi);
 };
