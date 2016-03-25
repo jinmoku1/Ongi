@@ -141,7 +141,7 @@ exports.appPush = function(callback){
 	var apnConnection = new apn.Connection(options);
 
 
-	var token = '앞에서 Xcode로 build 하면서 획득한 아이폰 디바이스 토큰을 입력한다.'
+	var token = '983af0b8343f30187f30a3d3d6cc07dd5729183472180e3eb5eec29401672efb'
 	var myDevice = new apn.Device(token);
 
 	var note = new apn.Notification();
@@ -150,4 +150,5 @@ exports.appPush = function(callback){
 	note.payload = {'message': '안녕하세요'};
 
 	apnConnection.pushNotification(note, myDevice);
+	callback();
 }

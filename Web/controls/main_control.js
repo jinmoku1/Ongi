@@ -12,7 +12,7 @@ exports.index = function(req, res) {
 };
 exports.test = function(req, res) {
 	api.appPush(function(){
-		res.send("dd");
+		res.send("success");
 	})
 };
 
