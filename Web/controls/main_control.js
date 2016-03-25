@@ -3,7 +3,6 @@
  */
 var querystring = require('querystring');
 var http = require('http');
-var utf8 = require('utf8');
 var fs = require('fs');
 
 var mysqlMapper = require('../db/mysql_mapper');
