@@ -1,14 +1,14 @@
 var mysqlMapper = require('../../db/mysql_mapper');
 
 exports.startWriteRealtimeUsage = function(){
-
 	console.log("usage insert start");
 
-	//mysqlMapper.makeDonation(uidFrom, uidTo, amount, function(err, result) {
-	//	for (var i in result) {
-	//		setIntervalRealtimeUsage(result[i].accessToken, result[i].deviceId);
-	//	}
-	//});
+	mysqlMapper.selectAllBasicInfos(function(err, result) {
+		for (var i in result) {
+			console.log("result: " + result[i]);
+			//setIntervalRealtimeUsage(result[i].accessToken, result[i].deviceId);
+		}
+	});
 };
 
 var setIntervalRealtimeUsage = function(accessToken,deviceId){

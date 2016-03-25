@@ -1,43 +1,51 @@
-use web;
 
 create table users (
-    uid varchar(250) primary key not null,
-    nickName varchar(250) not null,
-    email varchar(250) not null,
-    phone varchar(30) not null,
-    meteringDay double not null,
-    maxLimitUsageBill double not null,
-    userType ENUM('N', 'O')
+    userId varchar(250) primary key not null,
+    nickName varchar(250),
+    email varchar(250),
+    phone varchar(30),
+    meteringDay double,
+    maxLimitUsageBill double,
+    userType ENUM('N', 'O'),
+    unique(email),
+    unique(phone)
+);
+
+create table relations (
+    helper_id varchar(250) not null,
+    helpee_id varchar(250) not null,
+    primary key (helper_id, helpee_id),
+    foreign key (helper_id) references users(userId) on delete cascade
 );
 
 create table receiver_list (
-    uid varchar(250) primary key not null,
+    userId varchar(250) primary key not null,
     last_time_received timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     total_amount_received double,
-    foreign key (uid) references users(uid) on delete cascade
+    foreign key (userId) references users(userId) on delete cascade
 );
 
 create table donor_list (
-    uid varchar(250) primary key not null,
+    userId varchar(250) primary key not null,
     last_time_donated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     total_amount_donated double,
-    foreign key (uid) references users(uid) on delete cascade
+    foreign key (userId) references users(userId) on delete cascade
 );
 
 create table donation_list (
-    uidFrom varchar(250) not null,
-    uidTo varchar(250) not null,
+    userIdFrom varchar(250) not null,
+    userIdTo varchar(250) not null,
     amount double not null,
     id int primary key not null auto_increment,
-    index(uidFrom),
-    index(uidTo)
+    time_donated timestamp DEFAULT CURRENT_TIMESTAMP,
+    index(userIdFrom),
+    index(userIdTo)
 );
 
 create table userAuthCode (
-  authCode varchar(250) not null,
-  accessToken varchar(250) not null,
-  nickName varchar(250) not null,
-  identification varchar(250) not null
+    userId varchar(250) primary key not null,
+    accessToken varchar(250) not null,
+    deviceId varchar(250) not null
 );
 
 create table userUsage (

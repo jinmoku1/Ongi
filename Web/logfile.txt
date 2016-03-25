@@ -157,3 +157,6 @@
 ::1 - - [Fri, 25 Mar 2016 18:57:06 GMT] "GET /test HTTP/1.1" 500 1257 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
 ::1 - - [Fri, 25 Mar 2016 18:57:22 GMT] "GET /test HTTP/1.1" 500 1257 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
 ::1 - - [Fri, 25 Mar 2016 19:00:18 GMT] "GET /test HTTP/1.1" 500 1257 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
+::1 - - [Fri, 25 Mar 2016 19:50:28 GMT] "GET /test HTTP/1.1" 500 1189 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
+::1 - - [Fri, 25 Mar 2016 19:50:51 GMT] "GET /loginGeneral HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
+::1 - - [Fri, 25 Mar 2016 19:51:04 GMT] "GET /admin/signup/add HTTP/1.1" 200 1 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36"
