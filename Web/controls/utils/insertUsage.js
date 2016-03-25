@@ -4,12 +4,12 @@ var request = require('request');
 exports.startWriteRealtimeUsage = function(){
 	console.log("usage insert start");
 
-	mysqlMapper.selectAllBasicInfos(function(err, result) {
-		for (var i in result) {
-			console.log("result: " + JSON.stringify(result[i]));
-			setIntervalRealtimeUsage(result[i].accessToken, result[i].deviceId);
-		}
-	});
+	//mysqlMapper.selectAllBasicInfos(function(err, result) {
+	//	for (var i in result) {
+	//		console.log("result: " + JSON.stringify(result[i]));
+	//		setIntervalRealtimeUsage(result[i].accessToken, result[i].deviceId);
+	//	}
+	//});
 };
 
 var setIntervalRealtimeUsage = function(accessToken,deviceId){
