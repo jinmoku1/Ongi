@@ -13,7 +13,7 @@ exports.index = function(req, res) {
 	res.send('hello world: ');
 };
 exports.test = function(req, res) {
-	api.appPush(function(){
+	api.appPush({userId: '1'},function(){
 		res.send("success");
 	})
 };
@@ -53,30 +53,14 @@ exports.adminAdd = function(req, res){
 //	var accessToken = req.query.access_token;
 //	var helperEmail = req.query.helper_email;
 //	var helperPhone = req.query.helper_phone;
-	console.log(req.file.path);
-	console.log(req.file.type);
-	var nickName = req.query.nickName;
-	var name = nickName;
-	var phoneNumber = req.query.phoneNumber;
+	var name = req.query.nickName;
+	var phone = req.query.phoneNumber;
 	var email = req.query.email;
 	var accessToken = req.query.access_token;
-	var authCode = req.query.auth_code;
+	var address = req.query.address;
 	var file = __dirname + "/" + req.file.name;
-	var pictureUrl = req.file.path;
-
-	fs.readFile( req.file.path, function (err, data) {
-			 fs.writeFile(file, data, function (err) {
-
-					console.log(nickName);
-					console.log(phoneNumber);
-					console.log(email);
-					console.log(accessToken);
-					console.log(authCode);
-					console.log(pictureUrl);
-
-
-			});
-	});
+	var imageUrl = req.file.path;
+	
 
 	api.retrieveUser(accessToken, function(userHelpee){
 		if (userHelpee == null){
@@ -87,6 +71,8 @@ exports.adminAdd = function(req, res){
 			if (userHelpee.nickName == null){
 				userHelpee.nickName = name;
 			}
+			userHelpee.address = address;
+			userHelpee.imageUrl = imageUrl;
 			addUser(req, userHelpee, function(exists){
 				if (! exists){
 					mysqlMapper.getUserByPhoneOrEmail(phone, email, function(err, result){
@@ -103,7 +89,12 @@ exports.adminAdd = function(req, res){
 								}
 								else {
 									insertBasicInfo(userHelpee.userId, accessToken, function(){
-										res.send('1');
+										// image file
+										fs.readFile( req.file.path, function (err, data) {
+												fs.writeFile(file, data, function (err) {
+													res.send('1');
+											});
+										});
 									});
 								}
 							});

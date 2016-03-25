@@ -129,13 +129,13 @@ exports.retrieveUser = function(accessToken, f){
 	}
 }
 
-exports.appPush = function(callback){
+exports.appPush = function(data, callback){
 	var apn = require('apn');
 
 	var options = {
 		gateway : "gateway.sandbox.push.apple.com",
-		cert: '../keys/cert.pem',
-		key: '../keys/key.pem'
+		cert: 'keys/cert.pem',
+		key: 'keys/key.pem'
 	};
 
 	var apnConnection = new apn.Connection(options);
@@ -146,8 +146,8 @@ exports.appPush = function(callback){
 
 	var note = new apn.Notification();
 	note.badge = 3;
-	note.alert = 'saltfactory 푸시 테스트';
-	note.payload = {'message': '안녕하세요'};
+	note.alert = '온기가 필요해!';
+	note.payload = data;
 
 	apnConnection.pushNotification(note, myDevice);
 	callback();

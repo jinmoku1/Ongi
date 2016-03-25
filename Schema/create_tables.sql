@@ -7,6 +7,8 @@ create table users (
     meteringDay double,
     maxLimitUsageBill double,
     userType ENUM('N', 'O'),
+    address varchar(250),
+    imageUrl varchar(250),
     unique(email),
     unique(phone)
 );

@@ -27,7 +27,7 @@ exports.route = function (app) {
 	app.get('/loginGeneral', main.loginGeneral);
 	app.get('/admin/signup', main.admin);
 	app.post('/admin/signup/add',upload.single('file'),main.adminAdd);
-	app.get('/test', api.testApi);
+	app.get('/test', main.test);
 	app.get('/donate', api.donate);
 
 
