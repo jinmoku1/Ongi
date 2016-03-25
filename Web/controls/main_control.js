@@ -56,18 +56,19 @@ exports.loginGeneral = function(req, res) {
 		userType : userType
 	}
 
-	var get_options = {
-		host: 'closure-compiler.appspot.com',
-		port: '80',
-		path: '/compile',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Content-Length': Buffer.byteLength(post_data)
-		}
-	};
+//	var get_options = {
+//		host: 'closure-compiler.appspot.com',
+//		port: '80',
+//		path: '/compile',
+//		method: 'POST',
+//		headers: {
+//			'Content-Type': 'application/x-www-form-urlencoded',
+//			'Content-Length': Buffer.byteLength(post_data)
+//		}
+//	};
 
-	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
+	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
+		session.setSessionUser(req, user);
 		if (err) {
 			console.error(err);
 		}
