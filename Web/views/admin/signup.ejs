@@ -15,18 +15,12 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="text-center" style="padding:50px 0">
-			<div class="logo">할머니 등록</div>
 			<!-- Main Form -->
 			<div class="login-form-1">
-				<form id="login-form" class="text-left">
-					<div class="upload-image">
-						<form method="post" enctype="multipart/form-data">
-    					<p>Image: <input type="file" name="image" /></p>
-    					<p><input type="submit" value="Upload" /></p>
-    				</form>
-					</div>
+				<form id="login-form" method="post" class="text-left" enctype="multipart/form-data">
 					<div class="main-login-form">
 						<div class="login-group">
+							<h3>할머니 등록</h3>
 							<div class="form-group">
 								<label for="lg_name" class="sr-only">이름</label>
 								<input type="text" class="form-control" id="lg_name" name="lg_name" placeholder="이름">
@@ -35,6 +29,11 @@
 								<label for="lg_address" class="sr-only">주소</label>
 								<input type="text" class="form-control" id="lg_address" name="lg_address" placeholder="주소">
 							</div>
+							<div class="form-group">
+								<label for="lg_photo" class="sr-only">사진</label>
+								<input type="file" name="file" id="file" />
+							</div>
+							<h3>후원자 등록</h3>
 							<div class="form-group">
 								<label for="lg_phoneNo" class="sr-only">전화번호</label>
 								<input type="text" class="form-control" id="lg_phoneNo" name="lg_phoneNo" placeholder="전화번호">

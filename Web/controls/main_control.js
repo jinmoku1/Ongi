@@ -4,6 +4,7 @@
 var querystring = require('querystring');
 var http = require('http');
 var utf8 = require('utf8');
+var fs = require('fs');
 
 var mysqlMapper = require('../db/mysql_mapper');
 var api = require('./api_control');
@@ -13,7 +14,7 @@ exports.index = function(req, res) {
 	res.send('hello world: ');
 };
 exports.test = function(req, res) {
-	
+
 };
 
 exports.session = function(req, res) {
@@ -51,11 +52,31 @@ exports.adminAdd = function(req, res){
 //	var accessToken = req.query.access_token;
 //	var helperEmail = req.query.helper_email;
 //	var helperPhone = req.query.helper_phone;
-	var accessToken = '1c8e6ca7bc846307e7a93ddb12ec71cfc970b0fd107acd71f80028d4cf8ef2081541735193d3fabefcb4039a8aa14f3a99e1abf7c7d13ef516062ed91bf49d3a';
-	var name = "할머니";
-	var email = "hack.seoul03@encoredtech.com";
-	var phone = "fa";
-	
+	console.log(req.file.path);
+	console.log(req.file.type);
+	var nickName = req.query.nickName;
+	var name = nickName;
+	var phoneNumber = req.query.phoneNumber;
+	var email = req.query.email;
+	var accessToken = req.query.access_token;
+	var authCode = req.query.auth_code;
+	var file = __dirname + "/" + req.file.name;
+	var pictureUrl = req.file.path;
+
+	fs.readFile( req.file.path, function (err, data) {
+			 fs.writeFile(file, data, function (err) {
+
+					console.log(nickName);
+					console.log(phoneNumber);
+					console.log(email);
+					console.log(accessToken);
+					console.log(authCode);
+					console.log(pictureUrl);
+
+
+			});
+	});
+
 	api.retrieveUser(accessToken, function(userHelpee){
 		if (userHelpee == null){
 			res.send('0');
@@ -150,7 +171,7 @@ var insertBasicInfo = function(userId, accessToken, callback){
 				deviceId: deviceId,
 				userId: userId
 		}
-		
+
 		mysqlMapper.insertOrUpdateBasicInfo(userAuthCode, function(err, result){
 			if (err) {
 				console.error(err);
