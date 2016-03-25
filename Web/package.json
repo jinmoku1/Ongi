@@ -9,6 +9,7 @@
   "author": "sundayfriends",
   "license": "ISC",
   "dependencies": {
+    "apn": "^1.7.5",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
     "easyimage": "^2.1.0",

@@ -14,7 +14,9 @@ exports.index = function(req, res) {
 	res.send('hello world: ');
 };
 exports.test = function(req, res) {
-
+	api.appPush(function(){
+		res.send("dd");
+	})
 };
 
 exports.session = function(req, res) {
