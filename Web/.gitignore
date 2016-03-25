@@ -1,3 +1,4 @@
 .project
 .logfile.txt
 ./node_modules
+*.imi
