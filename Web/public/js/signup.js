@@ -7,7 +7,7 @@ var DEVICE_ID;
 
 var CLIENT_ID = "aHl1bm1pbjkwQGdtYWlsLmNvbV9Pbmdp";
 var CLIENT_SECRET = "gh17e4rk5gr86o8gs9dw9gn0xi8t452y72x1p68";
-var REDIRECT_URI = "http://localhost:3000/admin/signup";
+var REDIRECT_URI = "http://localhost:3000/admin/signup/add";
 
 // Define String.startsWith method
 if (!String.prototype.startsWith)
@@ -41,7 +41,7 @@ function enertalkLogin()
     var clientIdParam = "?client_id=" + CLIENT_ID;
     var userName = $('#lg_name').val();
     var userAddress = $('#lg_address').val();
-    var redirectUriParam = "&redirect_uri=" + document.URL+"?lg_name="+userName+"?lg_address"+userAddress;
+    var redirectUriParam = "&redirect_uri=" + REDIRECT_URI+"?lg_name="+userName+"?lg_address="+userAddress;
 
     var responseTypeParam = "&response_type=code";
     var appVersionParam = "&app_version=web";
@@ -63,9 +63,9 @@ function enertalkLogin()
  */
 function parseAuthCodeFromUrl()
 {
-    var expectedUrl = "http://localhost:3000/admin/signup";
+    var expectedUrl = "http://localhost:3000/admin/signup/add";
 
-    var currentUri = window.location.href;
+    var currentUri = expectedUrl;
     console.log(": " + currentUri);
 
     if (currentUri.startsWith(expectedUrl))
@@ -90,7 +90,6 @@ function updateLoginAndTokenElements()
     }
 
     console.log("Authorization Code: " + AUTH_CODE);
-
 }
 
 /**

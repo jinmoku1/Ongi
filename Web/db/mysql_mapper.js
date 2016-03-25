@@ -32,18 +32,6 @@ exports.insertOrUpdateOnExist = function(user, callback) {
 	});
 }
 
-exports.inserAccessToken = function(userAuthCode, callback) {
-	var query = connection.query("INSERT INTO userAccessToken (authCode, accessToken, nickName) VALUES " +
-			"(?, ?, ?) " +
-			"ON DUPLICATE KEY UPDATE " +
-			"authCode=?, " +
-			"accessToken=?, " +
-			"nickName=? "
-		, [userAuthCode.authCode, user.accessToken, user.nickName], function(err, result){
-		callback(err, result);
-	});
-}
-
 exports.getNextReceiver = function(callback) {
 	var query = connection.query('SELECT * FROM receiver_list ORDER BY total_amount_received, last_time_received ASC LIMIT 1', function(err, result){
 		callback(result);
@@ -56,6 +44,13 @@ exports.addToReceiverList = function(uid, callback) {
 		total_amount_received : 0
 	};
 	var query = connection.query('INSERT INTO receiver_list SET ?', receiver, function(err, result){
+		callback(result);
+	});
+}
+
+exports.insertAccessToken = function(userAuthCode, callback) {
+
+	var query = connection.query('INSERT INTO userAuthCode SET ?', userAuthCode, function(err, result){
 		callback(result);
 	});
 }

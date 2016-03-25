@@ -8,12 +8,12 @@ var session = require('../session');
 exports.donate = function(req, res) {
 	var uid = req.body.uid;
 	var amount = req.body.ammount;
-	
+
 	var user = session.getSessionUser(req);
-	
+
 	mysqlMapper.getNextReceiver(function(result){
 		var uid = result.uid;
-		
+
 	});
 };
 

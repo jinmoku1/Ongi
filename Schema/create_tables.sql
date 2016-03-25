@@ -26,4 +26,9 @@ create table donation_list (
     index(uidTo)
 )
 
-
+create table userAuthCode (
+  authCode varchar(250) not null,
+  accessToken varchar(250) not null,
+  nickName varchar(250) not null,
+  identification varchar(250) not null
+)

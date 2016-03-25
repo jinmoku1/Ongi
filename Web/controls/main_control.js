@@ -70,17 +70,24 @@ exports.admin = function(req,res){
 };
 
 exports.adminAdd = function(req,res){
+	var identification = req.query.lg_name;
+	var authCode = req.query.code;
+	identification = identification.toString('utf8');
+	nickName=identification.slice(0, identification.indexOf("?"));
+	console.log(nickName);
+	console.log(authCode);
 	var userAuthCode = {
-		authCode:"test",
+		authCode:authCode,
 		accessToken:"test",
-		nickName:"할매"
+		nickName:nickName,
+		identification:identification
 	}
-	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
+	mysqlMapper.insertAccessToken(userAuthCode, function(err, result){
 		if (err) {
 			console.error(err);
 		}
-		console.log(user);
-		session.setSessionUser(req, user);
+		console.log(userAuthCode);
+		session.setSessionUser(req, userAuthCode);
 		res.send('1');
 	});
 };
