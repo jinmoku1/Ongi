@@ -67,23 +67,45 @@ exports.loginGeneral = function(req, res) {
 //		}
 //	};
 
-	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
-		session.setSessionUser(req, user);
-		if (err) {
-			console.error(err);
-		}
-		else {
-			mysqlMapper.addToDonorList(user, function(err, result){
-			});
-			if (user.userType == 'O'){
-				mysqlMapper.addToReceiverList(user, function(err, result){
-					res.send('1:O');
-				});
+	mysqlMapper.getUserByUid(user.uid, function(err, result){
+		var exists = result;
+		mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
+			session.setSessionUser(req, user);
+			if (err) {
+				console.error(err);
+				res.send('0');
 			}
 			else {
-				res.send('0')
+				console.log(exists);
+				if (exists == undefined || exists.length == 0){
+					mysqlMapper.addToDonorList(user, function(err, result){ 
+						if (err) {
+							console.error(err);
+							res.send('0');
+						}
+						else {
+							if (user.userType == 'O'){
+								mysqlMapper.addToReceiverList(user, function(err, result){
+									if (err) {
+										console.error(err);
+										res.send('0');
+									}
+									else {
+										res.send('1');
+									}
+								});
+							}
+							else {
+								res.send('1');
+							}
+						}
+					});
+				}
+				else {
+					res.send('1');
+				}
 			}
-		}
+		});
 	});
 };
 

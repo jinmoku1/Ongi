@@ -1,66 +1,57 @@
-var request = require('request');
 var mysqlMapper = require('../db/mysql_mapper');
 var session = require('../session');
+var http = require('http');
 var intervalRealtimeUsage;
-
 var DEVICE_ID;
+
 /*
  * req:
  */
 exports.donate = function(req, res) {
-	var amount = req.body.ammount;
+	var amount = req.body.amount;
 
 	var user = session.getSessionUser(req);
 
-	mysqlMapper.getNextReceiver(function(result){
-		var uid = result.uid;
+	var uidFrom = user.uid;
 
+	mysqlMapper.getNextReceiver(function(err, result){
+		if (err){
+			console.error(err);
+		}
+		else {
+			var uidTo = result[0].uid;
+			mysqlMapper.makeDonation(uidFrom, uidTo, amount, function(err, result){
+				if (err){
+					console.error(err);
+				}
+				else {
+					mysqlMapper.updateReceiverList(uidTo, amount, function(err, result){
+						if (err){
+							console.error(err);
+						}
+						else {
+							mysqlMapper.updateDonorList(uidFrom, amount, function(err, result){
+								if (err){
+									console.error(err);
+								}
+								else {
+									mysqlMapper.getUserByUid(uidTo, function(err, result){
+										if (err){
+											console.error(err);
+										}
+										else {
+											console.log(result[0]);
+											res.json(result);
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		}
 	});
-};
-
-
-/*
- * req:
- */
-function addToReceiverList(uid, callback) {
-	mysqlMapper.addToReceiverList(uid, function(err, result) {
-
-		var amount = 400;
-
-		var user = session.getSessionUser(req);
-		var uidFrom = user.uid;
-
-		mysqlMapper.getNextReceiver(function (err, result) {
-			if (err) {
-				console.error(err);
-			}
-			else {
-				var uidTo = result[0].uid;
-				mysqlMapper.makeDonation(uidFrom, uidTo, amount, function (err, result) {
-					if (err) {
-						console.error(err);
-					}
-					else {
-						mysqlMapper.updateReceiverList(uidTo, amount, function (err, result) {
-							if (err) {
-								console.error(err);
-							}
-							else {
-								mysqlMapper.updateDonorList(uidFrom, amount, function (err, result) {
-									if (err) {
-										console.error(err);
-									}
-									else {
-										res.send("1");
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		});
-	})
 };
 
 exports.startWriteRealtimeUsage = function(req, res){
@@ -86,7 +77,9 @@ exports.stopWriteRealtimeUsage = function(req, res){
 };
 
 exports.testApi = function(req, res){
-
+	sendApiByName('realtimeUsage', function(result){
+		res.json({status:200, responseData : result});
+	});
 }
 
 var getAccessToken = function(){
