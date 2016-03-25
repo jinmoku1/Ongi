@@ -3,3 +3,4 @@
 .idea/
 Web/logfile.txt
 Web/node_modules
+.node_modules/
