@@ -79,7 +79,7 @@ exports.loginGeneral = function(req, res) {
 			else {
 				console.log(exists);
 				if (exists == undefined || exists.length == 0){
-					mysqlMapper.addToDonorList(user, function(err, result){ 
+					mysqlMapper.addToDonorList(user, function(err, result){
 						if (err) {
 							console.error(err);
 							res.send('0');
@@ -115,17 +115,16 @@ exports.admin = function(req,res){
 };
 
 exports.adminAdd = function(req,res){
-	var identification = req.query.lg_name;
-	var authCode = req.query.code;
-	nickName=identification.slice(0, identification.indexOf("?"));
-	nickName=utf8.decode(nickName);
-	console.log(nickName);
+	var identification = req.query.nickName;
+	var accessToken = req.query.access_token;
+	var authCode = req.query.auth_code;
+	console.log(identification);
 	console.log(authCode);
 	var userAuthCode = {
 		authCode:authCode,
-		accessToken:"test",
-		nickName:nickName,
-		identification:identification
+		accessToken:accessToken,
+		nickName:identification,
+		identification:identification+accessToken
 	}
 
 	mysqlMapper.insertAccessToken(userAuthCode, function(err, result){
