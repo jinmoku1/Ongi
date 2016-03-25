@@ -17,13 +17,19 @@ create table receiver_list (
     foreign key (uid) references users(uid) on delete cascade
 )
 
+create table donor_list (
+    uid varchar(250) primary key not null,
+    last_time_donated timestamp default now(),
+    total_amount_donated double,
+    foreign key (uid) references users(uid) on delete cascade
+)
+
 create table donation_list (
     uidFrom varchar(250) not null,
     uidTo varchar(250) not null,
     amount double not null,
-    id int primary key not null,
+    id int primary key not null auto_increment,
     index(uidFrom),
     index(uidTo)
 )
-
 
