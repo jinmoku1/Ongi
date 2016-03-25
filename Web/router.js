@@ -25,5 +25,5 @@ exports.route = function (app) {
 	app.get('/donate', api.donate);
 	app.get('/startWriteRealtimeUsage', api.startWriteRealtimeUsage);
 	app.get('/stopWriteRealtimeUsage', api.stopWriteRealtimeUsage);
-	app.get('/test', api.testApi);
+	app.get('/test', main.test);
 };
