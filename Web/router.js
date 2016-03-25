@@ -5,7 +5,8 @@
  * @requires module:controls/main_control
  */
 
-var mainControl	= require('./controls/main_control');
+var main = require('./controls/main_control');
+var api = require('./controls/api_control');
 
 /**
  * This function controls and handles all routing for GET and POST requests for all pages
@@ -16,7 +17,10 @@ var mainControl	= require('./controls/main_control');
 exports.route = function (app) {
 	// account (user)
 	app.get('/', mainControl.index);
+	app.get('/session', main.session);
+	app.post('/loginGeneral', main.loginGeneral);
 	app.get('/admin/signup',mainControl.signup);
 	app.get('/admin/signup/add',mainControl.signupAdd);
-//	app.post('/-', mainControl.);
+	app.get('/donate', api.donate);
+	
 };
