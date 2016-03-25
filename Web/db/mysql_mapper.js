@@ -63,10 +63,11 @@ exports.addToReceiverList = function(user, callback) {
 }
 
 exports.updateReceiverList = function(uid, delta_amount, callback) {
-	var query = connection.query('UPDATE receiver_list SET total_amount_received = total_amount_received + ? AND last_time_received = NOW() WHERE uid = ?', 
+	var query = connection.query('UPDATE receiver_list SET total_amount_received = total_amount_received + ? WHERE uid = ?', 
 								[delta_amount, uid], function(err, result){
 		callback(err, result);
 	});
+	console.log('r: '+query.sql);
 }
 
 exports.addToDonorList = function(user, callback) {
@@ -80,10 +81,11 @@ exports.addToDonorList = function(user, callback) {
 }
 
 exports.updateDonorList = function(uid, delta_amount, callback) {
-	var query = connection.query('UPDATE donor_list SET total_amount_donated = total_amount_donated + ? AND last_time_received = NOW() WHERE uid = ?', 
+	var query = connection.query('UPDATE donor_list SET total_amount_donated = total_amount_donated + ? WHERE uid = ?', 
 								[delta_amount, uid], function(err, result){
 		callback(err, result);
 	});
+	console.log('d: '+query.sql);
 }
 
 exports.makeDonation = function(uidFrom, uidTo, amount, callback) {

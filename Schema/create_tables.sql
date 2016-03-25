@@ -12,14 +12,14 @@ create table users (
 
 create table receiver_list (
     uid varchar(250) primary key not null,
-    last_time_received timestamp default now(),
+    last_time_received timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     total_amount_received double,
     foreign key (uid) references users(uid) on delete cascade
 )
 
 create table donor_list (
     uid varchar(250) primary key not null,
-    last_time_donated timestamp default now(),
+    last_time_donated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     total_amount_donated double,
     foreign key (uid) references users(uid) on delete cascade
 )
