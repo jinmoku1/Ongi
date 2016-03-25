@@ -4,6 +4,7 @@ var apn = require('apn');
 
 var COUNT_THRESHOLD = 10;
 var POWER_THRESHOLD = 1000;
+var INVALID = -1;
 
 exports.startWriteRealtimeUsage = function(){
 	console.log("usage insert start");
@@ -22,14 +23,16 @@ var setIntervalRealtimeUsage = function(userId, accessToken, deviceId){
 				console.log("result: " + JSON.stringify(result));
 				if(result) {
 					checkActivePowerInterval(userId, result, function(count){
-						if(count > COUNT_THRESHOLD){
-							console.log("push alarm device")
-							pushAlarm();
-						}
-						else{
-							mysqlMapper.insertUserHistory(userId, result, count, function(err, result){
-								console.log("insertUserHistory");
-							});
+						if(count != INVALID) {
+							if (count > COUNT_THRESHOLD) {
+								console.log("push alarm device")
+								pushAlarm();
+							}
+							else {
+								mysqlMapper.insertUserHistory(userId, result, count, function (err, result) {
+									console.log("insertUserHistory");
+								});
+							}
 						}
 					});
 				}
@@ -40,25 +43,29 @@ var setIntervalRealtimeUsage = function(userId, accessToken, deviceId){
 
 var checkActivePowerInterval = function(userId, usage, f){
 	var activePower = usage.activePower;
+	if(activePower) {
+		mysqlMapper.getUserHistory(userId, function (err, result) {
+			var history = result[0];
+			if (history) {
+				console.log("history: " + JSON.stringify(history));
+				var pastActivePower = history.activePower;
+				var pastCount = history.count;
 
-	mysqlMapper.getUserHistory(userId, function(err, result){
-		var history = result[0];
-		if(history) {
-			console.log("history: " + JSON.stringify(history));
-			var pastActivePower = history.activePower;
-			var pastCount = history.count;
-
-			if (Math.abs(activePower - pastActivePower) < POWER_THRESHOLD) {
-				f(pastCount + 1);
+				if (Math.abs(activePower - pastActivePower) < POWER_THRESHOLD) {
+					f(pastCount + 1);
+				}
+				else {
+					f(pastCount);
+				}
 			}
 			else {
-				f(pastCount);
+				f(INVALID);
 			}
-		}
-		else{
-			f(0);
-		}
-	});
+		});
+	}
+	else{
+		f(INVALID);
+	}
 }
 
 var sendApiRequest = function(apiName, accessToken, deviceId, f){
