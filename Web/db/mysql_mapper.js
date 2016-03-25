@@ -31,16 +31,24 @@ exports.getUserByPhoneOrEmail = function(phone, email, callback) {
 }
 
 exports.insertOrUpdateOnExist = function(user, callback) {
-	var query = connection.query("INSERT INTO users (userId, nickName, email, phone, meteringDay, maxLimitUsageBill, userType) VALUES " + 
-			"(?, ?, ?, ?, ?, ?, ?) " +
+	if (user.address == null){
+		user.address = '';
+	}
+	if (user.imageUrl == null){
+		user.imageUrl = '';
+	}
+	var query = connection.query("INSERT INTO users (userId, nickName, email, phone, meteringDay, maxLimitUsageBill, userType, address, imageUrl) VALUES " + 
+			"(?, ?, ?, ?, ?, ?, ?, ?, ?) " +
 			"ON DUPLICATE KEY UPDATE " + 
 			"nickName=?, " +
 			"email=?, " +
 			"phone=?, " +
 			"meteringDay=?, " +
 			"maxLimitUsageBill=?, " +
-			"userType=?", [user.userId, user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill, user.userType, 
-			               user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill, user.userType], function(err, result){
+			"address=?, " +
+			"imageUrl=?, " +
+			"userType=?", [user.userId, user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill, user.userType, user.address, user.imageUrl,
+			               user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill, user.address, user.imageUrl, user.userType], function(err, result){
 		callback(err, result);
 	});
 }
