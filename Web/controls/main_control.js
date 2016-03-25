@@ -3,6 +3,7 @@
  */
 var querystring = require('querystring');
 var http = require('http');
+var utf8 = require('utf8');
 
 var mysqlMapper = require('../db/mysql_mapper');
 var session = require('../session');
@@ -94,8 +95,8 @@ exports.admin = function(req,res){
 exports.adminAdd = function(req,res){
 	var identification = req.query.lg_name;
 	var authCode = req.query.code;
-	identification = identification.toString('utf8');
 	nickName=identification.slice(0, identification.indexOf("?"));
+	nickName=utf8.decode(nickName);
 	console.log(nickName);
 	console.log(authCode);
 	var userAuthCode = {
