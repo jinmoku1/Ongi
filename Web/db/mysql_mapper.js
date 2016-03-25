@@ -5,8 +5,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host :'localhost',
 	port : 3306,
-	user : 'jinmoku',
-	password : '1234',
+	user : 'root',
+	password : '',
 	database:'web'
 });
 
@@ -20,9 +20,9 @@ connection.connect(function(err) {
 
 
 exports.insertOrUpdateOnExist = function(user, callback) {
-	var query = connection.query("INSERT INTO users (uid, nickName, email, phone, meteringDay, maxLimitUsageBill) VALUES " + 
+	var query = connection.query("INSERT INTO users (uid, nickName, email, phone, meteringDay, maxLimitUsageBill) VALUES " +
 			"(?, ?, ?, ?, ?, ?) " +
-			"ON DUPLICATE KEY UPDATE " + 
+			"ON DUPLICATE KEY UPDATE " +
 			"nickName=?, " +
 			"email=?, " +
 			"phone=?, " +

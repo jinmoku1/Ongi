@@ -21,7 +21,7 @@ exports.loginGeneral = function(req, res) {
 //	var phone = req.body.phone;
 //	var meteringDay = req.body.meteringDay;
 //	var maxLimitUsageBill = req.body.maxLimitUsageBill;
-	
+
 	var uid = 'abc';
 	var nickName = 'ffff';
 	var email = '2#';
@@ -36,7 +36,7 @@ exports.loginGeneral = function(req, res) {
 		meteringDay : meteringDay,
 		maxLimitUsageBill : maxLimitUsageBill
 	}
-	
+
 	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
 		if (err) {
 			console.error(err);
@@ -45,4 +45,8 @@ exports.loginGeneral = function(req, res) {
 		session.setSessionUser(req, user);
 		res.send('1');
 	});
+};
+
+exports.admin = function(req,res){
+	res.render('admin/signup');
 };
