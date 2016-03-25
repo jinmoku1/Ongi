@@ -1,4 +1,3 @@
-
 var mysqlMapper = require('../db/mysql_mapper');
 var session = require('../session');
 
@@ -10,6 +9,24 @@ exports.donate = function(req, res) {
 
 	var user = session.getSessionUser(req);
 
+<<<<<<< HEAD
+	mysqlMapper.getNextReceiver(function(result){
+		var uid = result.uid;
+
+	});
+};
+
+
+/*
+ * req:
+ */
+function addToReceiverList(uid, callback) {
+
+	var amount = 400;
+
+	var user = session.getSessionUser(req);
+=======
+>>>>>>> 57b617fe9c561a2bb39c6e14438e93b2c3c454c8
 	var uidFrom = user.uid;
 
 	mysqlMapper.getNextReceiver(function(err, result){
