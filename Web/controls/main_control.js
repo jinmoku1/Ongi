@@ -120,6 +120,7 @@ exports.adminAdd = function(req,res){
 	var authCode = req.query.auth_code;
 	console.log(identification);
 	console.log(authCode);
+
 	var userAuthCode = {
 		authCode:authCode,
 		accessToken:accessToken,
