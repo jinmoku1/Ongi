@@ -8,11 +8,10 @@ var DEVICE_ID;
  * req:
  */
 exports.donate = function(req, res) {
-	var amount = req.body.amount;
+	var amount = req.body.ammount;
 
 	var user = session.getSessionUser(req);
 
-<<<<<<< HEAD
 	mysqlMapper.getNextReceiver(function(result){
 		var uid = result.uid;
 
@@ -28,8 +27,6 @@ function addToReceiverList(uid, callback) {
 	var amount = 400;
 
 	var user = session.getSessionUser(req);
-=======
->>>>>>> 57b617fe9c561a2bb39c6e14438e93b2c3c454c8
 	var uidFrom = user.uid;
 
 	mysqlMapper.getNextReceiver(function(err, result){
@@ -58,7 +55,6 @@ function addToReceiverList(uid, callback) {
 											console.error(err);
 										}
 										else {
-											console.log(result[0]);
 											res.json(result);
 										}
 									});
