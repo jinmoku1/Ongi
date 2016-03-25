@@ -28,6 +28,8 @@ var setIntervalRealtimeUsage = function(userId, accessToken, deviceId){
 								msg : '온기가 필요해.'
 							}, function(){
 							})
+
+							mysqlMapper.initCountUserHistory(userId);
 						}
 						else{
 							mysqlMapper.insertUserHistory(userId, result, count, function(err, result){
@@ -50,14 +52,12 @@ var checkActivePowerInterval = function(userId, usage, f){
 				var pastActivePower = history.activePower;
 				var pastCount = history.count;
 
-	mysqlMapper.getUserHistory(userId, function(err, result){
-		var history = result[0];
-		if(history) {
-			var pastActivePower = history.activePower;
-			var pastCount = history.count;
-
-			if (Math.abs(activePower - pastActivePower) < POWER_THRESHOLD) {
-				f(pastCount + 1);
+				if (Math.abs(activePower - pastActivePower) < POWER_THRESHOLD) {
+					f(pastCount + 1);
+				}
+				else {
+					f(pastCount);
+				}
 			}
 			else {
 				f(INVALID);
@@ -75,6 +75,7 @@ var sendApiRequest = function(apiName, accessToken, deviceId, f){
 		if (apiName !== 'deviceInfo'){
 			apiUrl += '/' + apiName;
 		}
+		console.log("requestUrl: " + apiUrl);
 
 		var options = {
 			method: 'GET',
@@ -90,6 +91,7 @@ var sendApiRequest = function(apiName, accessToken, deviceId, f){
 				f(result);
 			}
 			else{
+				console.log(response.statusCode);
 				f(response)
 			}
 		}

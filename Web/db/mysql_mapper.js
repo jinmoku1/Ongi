@@ -194,3 +194,9 @@ exports.getUserHistory = function(userId, callback) {
 		});
 }
 
+exports.initCountUserHistory = function(userId, callback) {
+	var query = connection.query('UPDATE user_history SET count = 0 WHERE userId = ?',
+		userId, function(err, result){
+			callback(err, result);
+		});
+}
