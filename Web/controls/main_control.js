@@ -1,6 +1,9 @@
 /**
  * @module controls/mainControl
  */
+var querystring = require('querystring');
+var http = require('http');
+var fs = require('fs');
 
 var mysqlMapper = require('../db/mysql_mapper');
 var session = require('../session');
@@ -36,6 +39,17 @@ exports.loginGeneral = function(req, res) {
 		meteringDay : meteringDay,
 		maxLimitUsageBill : maxLimitUsageBill
 	}
+	
+	var get_options = {
+		host: 'closure-compiler.appspot.com',
+		port: '80',
+		path: '/compile',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(post_data)
+		}
+	};
 	
 	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
 		if (err) {
