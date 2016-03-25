@@ -16,9 +16,12 @@ var api = require('./controls/api_control');
  */
 exports.route = function (app) {
 	// account (user)
-	app.get('/', main.index);
+	app.get('/', mainControl.index);
 	app.get('/session', main.session);
 	app.post('/loginGeneral', main.loginGeneral);
 	app.get('/admin/signup', main.admin);
+	//app.get('/admin/signup',mainControl.signup);
+	//app.get('/admin/signup/add',mainControl.signupAdd);
 	app.get('/donate', api.donate);
+
 };

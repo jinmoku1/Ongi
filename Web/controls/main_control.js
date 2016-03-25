@@ -13,6 +13,10 @@ exports.session = function(req, res) {
 	res.send('sesion uid: ' + session.getSessionUser(req).uid);
 };
 
+exports.signup = function(req,res){
+	res.render('admin/signup');
+};
+
 
 exports.loginGeneral = function(req, res) {
 //	var uid = req.body.uid;
