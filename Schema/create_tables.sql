@@ -1,4 +1,4 @@
-use web
+use web;
 
 create table users (
     uid varchar(250) primary key not null,
