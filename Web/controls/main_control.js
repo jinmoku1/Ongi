@@ -34,7 +34,7 @@ exports.loginGeneral = function(req, res) {
 //	var phone = req.body.phone;
 //	var meteringDay = req.body.meteringDay;
 //	var maxLimitUsageBill = req.body.maxLimitUsageBill;
-	var accessToken = '';
+	var accessToken = '7c1cd40ae008fe2e6b85f3eb5c6538fa0bd7b7349cfdcf2f2b02e95beafa2829aed40834e1aa3aac7735d58924af8b369fab7c9fe119da0ae7f0b4799853b1aa';
 
 	api.retrieveUser(accessToken, function(user){
 		console.log(user);
