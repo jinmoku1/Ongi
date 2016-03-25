@@ -1,4 +1,4 @@
-
+use web
 
 create table users (
     uid varchar(250) primary key not null,
@@ -8,22 +8,34 @@ create table users (
     meteringDay double not null,
     maxLimitUsageBill double not null,
     userType ENUM('N', 'O')
-)
+);
 
 create table receiver_list (
     uid varchar(250) primary key not null,
-    last_time_received timestamp default now(),
+    last_time_received timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     total_amount_received double,
     foreign key (uid) references users(uid) on delete cascade
-)
+);
+
+create table donor_list (
+    uid varchar(250) primary key not null,
+    last_time_donated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    total_amount_donated double,
+    foreign key (uid) references users(uid) on delete cascade
+);
 
 create table donation_list (
     uidFrom varchar(250) not null,
     uidTo varchar(250) not null,
     amount double not null,
-    id int primary key not null,
+    id int primary key not null auto_increment,
     index(uidFrom),
     index(uidTo)
-)
+);
 
-
+create table userAuthCode (
+  authCode varchar(250) not null,
+  accessToken varchar(250) not null,
+  nickName varchar(250) not null,
+  identification varchar(250) not null
+);
