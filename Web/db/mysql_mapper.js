@@ -96,3 +96,23 @@ exports.insertAccessToken = function(userAuthCode, callback) {
 		callback(result);
 	});
 }
+
+exports.insertUserUsage = function(uid, usage, callback) {
+
+	var usageObj = {
+		uid: uid,
+		voltage: usage.voltage,
+		current: usage.current,
+		activePower: usage.activePower,
+		apparentPower: usage.apparentPower,
+		reactivePower: usage.reactivePower,
+		powerFactor: usage.powerFactor,
+		wattHour: usage.wattHour,
+		powerBase: usage.powerBase
+	};
+
+	var query = connection.query('INSERT INTO userUsage SET ?', usageObj, function(err, result){
+		callback(result);
+	});
+}
+
