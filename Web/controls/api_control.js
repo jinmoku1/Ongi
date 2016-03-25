@@ -87,10 +87,10 @@ exports.startWriteRealtimeUsage = function(req, res){
 				}
 			});
 		}, 2000);
-		res.json({status:200, responseData : "insert start"});
+		res.json({status:200, responseData : "startWriteRealtimeUsage"});
 	}
 	else{
-		res.json({status:200, responseData : "startWriteRealtimeUsage"});
+		res.json({status:200, responseData : "error startWriteRealtimeUsage"});
 	}
 };
 
