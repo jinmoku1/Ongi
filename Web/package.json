@@ -1,0 +1,24 @@
+{
+  "name": "ongi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sundayfriends",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.1",
+    "easyimage": "^2.1.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-error-handler": "^1.1.0",
+    "express-favicon": "^1.0.1",
+    "express-logger": "0.0.3",
+    "express-session": "^1.13.0",
+    "mongodb": "^2.1.7",
+    "mysql": "^2.10.2",
+    "nodemailer": "^2.3.0"
+  }
+}
