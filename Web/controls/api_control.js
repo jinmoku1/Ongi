@@ -15,30 +15,30 @@ exports.donate = function(req, res) {
 
 	var user = session.getSessionUser(req);
 
-	var uidFrom = user.uid;
+	var userIdFrom = user.userId;
 
 	mysqlMapper.getNextReceiver(function(err, result){
 		if (err){
 			console.error(err);
 		}
 		else {
-			var uidTo = result[0].uid;
-			mysqlMapper.makeDonation(uidFrom, uidTo, amount, function(err, result){
+			var userIdTo = result[0].userId;
+			mysqlMapper.makeDonation(userIdFrom, userIdTo, amount, function(err, result){
 				if (err){
 					console.error(err);
 				}
 				else {
-					mysqlMapper.updateReceiverList(uidTo, amount, function(err, result){
+					mysqlMapper.updateReceiverList(userIdTo, amount, function(err, result){
 						if (err){
 							console.error(err);
 						}
 						else {
-							mysqlMapper.updateDonorList(uidFrom, amount, function(err, result){
+							mysqlMapper.updateDonorList(userIdFrom, amount, function(err, result){
 								if (err){
 									console.error(err);
 								}
 								else {
-									mysqlMapper.getUserByUid(uidTo, function(err, result){
+									mysqlMapper.getUserByUserId(userIdTo, function(err, result){
 										if (err){
 											console.error(err);
 										}
@@ -73,64 +73,7 @@ exports.testApi = function(req, res){
 	});
 }
 
-exports.startWriteRealtimeUsage = function(req, res){
-	var accessToken = getAccessToken(req);
-	var deviceId = getDeviceId(req);
-
-	if(accessToken && deviceId){
-		intervalRealtimeUsage = setInterval(function() {
-			sendApiByName('realtimeUsage', accessToken, deviceId, function(result){
-
-				console.log("result: " + JSON.stringify(result));
-
-				if(result) {
-					mysqlMapper.insertUserUsage(1, result, function(insertResult){
-						console.log("insertRows: " + JSON.stringify(insertResult));
-					});
-				}
-			});
-		}, 2000);
-		res.json({status:200, responseData : "startWriteRealtimeUsage"});
-	}
-	else{
-		res.json({status:200, responseData : "error startWriteRealtimeUsage"});
-	}
-};
-
-exports.stopWriteRealtimeUsage = function(req, res){
-	if(intervalRealtimeUsage){
-		clearInterval(intervalRealtimeUsage);
-		intervalRealtimeUsage = null;
-	}
-	res.json({status:200, responseData : "stopWriteRealtimeUsage"});
-};
-
-var getAccessToken = function(req){
-	var accessToken = null, sessionUser = session.getSessionUser(req);
-	if(sessionUser){
-		accessToken = sessionUser.accessToken;
-	}
-	return accessToken;
-}
-
-var getDeviceId = function(req){
-	var deviceId = null, sessionUser = session.getSessionUser(req);
-	if(sessionUser){
-		deviceId = sessionUser.deviceId;
-	}
-	return deviceId;
-}
-
-var setDeviceIdInSession = function(req, deviceId){
-	console.log("setDeviceIdInSession");
-	var sessionUser = session.getSessionUser(req);
-	if(sessionUser){
-		sessionUser.deviceId = deviceId;
-	}
-	console.log("sessionUser: " + JSON.stringify(sessionUser));
-}
-
-var retrieveDeviceId = function(accessToken, f){
+exports.retrieveDeviceId = function(accessToken, f){
 	if(accessToken) {
 		var options = {
 			method: 'GET',
@@ -140,66 +83,45 @@ var retrieveDeviceId = function(accessToken, f){
 			}
 		};
 
-		function callback(error, response, body) {
+		request(options, function(error, response, body){
 			if (!error && response.statusCode == 200) {
 				var deviceId;
 				var result = JSON.parse(body);
 				deviceId = result.uuid;
-				console.log("deviceId: " + deviceId);
 				f(deviceId);
 			}
 			else{
 				f(error);
 			}
-		}
-		request(options, callback);
+		});
 	}
 	else{
 		f(null)
 	}
 }
 
-var sendApiRequest = function(apiName, accessToken, deviceId, f){
-	if(accessToken && deviceId){
-		var apiUrl = "https://api.encoredtech.com:8082/1.2/devices/" + deviceId;
-		if (apiName !== 'deviceInfo'){
-			apiUrl += '/' + apiName;
-		}
-		console.log("requestUrl: " + apiUrl);
-
+exports.retrieveUser = function(accessToken, f){
+	if (accessToken) {
+		console.log("fajsdiofdsjf");
 		var options = {
 			method: 'GET',
-			url: apiUrl,
+			url: 'https://api.encoredtech.com/1.2/me',
 			headers: {
 				'Authorization': "Bearer " + accessToken
 			}
 		};
 
-		function callback(error, response, body) {
+		request(options, function(error, response, body){
 			if (!error && response.statusCode == 200) {
-				var result = JSON.parse(body);
-				f(result);
+				var user = JSON.parse(body);
+				f(user);
 			}
 			else{
-				console.log(response.statusCode);
-				f(response)
+				f(error);
 			}
-		}
-		request(options, callback);
-	}
-	else{
-		f(null);
-	}
-}
-
-var sendApiByName = function(apiName, accessToken, deviceId, f){
-	if(accessToken && deviceId){
-		sendApiRequest(apiName, accessToken, deviceId, function(result){
-			f(result);
 		});
 	}
 	else{
-		// not login
-		f(null);
+		f(null)
 	}
 }

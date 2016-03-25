@@ -1,3 +1,5 @@
 .project
 .logfile.txt
 .idea/
+Web/logfile.txt
+node_modules

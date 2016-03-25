@@ -14,7 +14,7 @@ var logger = require('express-logger');
 var favicon = require('express-favicon');
 var bodyParser = require('body-parser');
 var errorHandler = require('express-error-handler');
-
+var insertUsage = require('./controls/utils/insertUsage');
 
 // extended requirement
 var router = require('./router');
@@ -47,4 +47,5 @@ router.route(app);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
+	insertUsage.startWriteRealtimeUsage();
 });
