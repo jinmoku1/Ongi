@@ -115,16 +115,21 @@ exports.admin = function(req,res){
 };
 
 exports.adminAdd = function(req,res){
-	var identification = req.query.nickName;
+
+	var nickName = req.query.nickName;
+	var phoneNumber = req.query.phoneNumber;
+	var email = req.query.email;
+	var imageUrl = req.query.imageUrl;
 	var accessToken = req.query.access_token;
 	var authCode = req.query.auth_code;
-	console.log(identification);
+	
+	console.log(nickName);
 	console.log(authCode);
 
 	var userAuthCode = {
 		authCode:authCode,
 		accessToken:accessToken,
-		nickName:identification,
+		nickName:nickName,
 		identification:identification+accessToken
 	}
 
