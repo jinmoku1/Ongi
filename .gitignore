@@ -2,4 +2,5 @@
 .logfile.txt
 .idea/
 Web/logfile.txt
-node_modules
+Web/node_modules
+.node_modules/
