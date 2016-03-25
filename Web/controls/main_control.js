@@ -32,7 +32,7 @@ exports.loginGeneral = function(req, res) {
 //	var phone = req.body.phone;
 //	var meteringDay = req.body.meteringDay;
 //	var maxLimitUsageBill = req.body.maxLimitUsageBill;
-	var accessToken = 'bd5f6c7f793e9b2dc9305f23b4765371662631647466c849fdadec7fd7c95a5edf1f1f48d2143f1304a5174fb44f92e933cfd181fae4d966623924764eb7de15';
+	var accessToken = '';
 
 	api.retrieveUser(accessToken, function(user){
 		console.log(user);
@@ -48,13 +48,11 @@ exports.admin = function(req,res){
 };
 
 exports.adminAdd = function(req, res){
-//	var accessToken = req.query.access_token;
-//	var helperEmail = req.query.helper_email;
-//	var helperPhone = req.query.helper_phone;
-	var accessToken = '1c8e6ca7bc846307e7a93ddb12ec71cfc970b0fd107acd71f80028d4cf8ef2081541735193d3fabefcb4039a8aa14f3a99e1abf7c7d13ef516062ed91bf49d3a';
-	var name = "할머니";
-	var email = "hack.seoul03@encoredtech.com";
-	var phone = "fa";
+	var name = req.query.nickName;
+	var phoneNumber = req.query.phoneNumber;
+	var email = req.query.email;
+	var imageUrl = req.query.imageUrl;
+	var accessToken = req.query.access_token;
 	
 	api.retrieveUser(accessToken, function(userHelpee){
 		if (userHelpee == null){
