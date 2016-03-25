@@ -108,21 +108,21 @@ var sendApiByName = function(apiName, accessToken, deviceId, f){
 
 var pushAlarm = function(){
 
-	var options = {
-		gateway : "gateway.sandbox.push.apple.com",
-		cert: './keys/cert.pem',
-		key: './keys/key.pem'
-	};
-
-	var apnConnection = new apn.Connection(options);
-
-	var token = '앞에서 Xcode로 build 하면서 획득한 아이폰 디바이스 토큰을 입력한다.'
-	var myDevice = new apn.Device(token);
-
-	var note = new apn.Notification();
-	note.badge = 3;
-	note.alert = '전력량 변화가 없습니다';
-	note.payload = {'message': '안녕하세요'};
-
-	apnConnection.pushNotification(note, myDevice);
+	//var options = {
+	//	gateway : "gateway.sandbox.push.apple.com",
+	//	cert: './keys/cert.pem',
+	//	key: './keys/key.pem'
+	//};
+	//
+	//var apnConnection = new apn.Connection(options);
+	//
+	//var token = '앞에서 Xcode로 build 하면서 획득한 아이폰 디바이스 토큰을 입력한다.'
+	//var myDevice = new apn.Device(token);
+	//
+	//var note = new apn.Notification();
+	//note.badge = 3;
+	//note.alert = '전력량 변화가 없습니다';
+	//note.payload = {'message': '안녕하세요'};
+	//
+	//apnConnection.pushNotification(note, myDevice);
 }
