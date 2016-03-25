@@ -26,6 +26,10 @@ exports.session = function(req, res) {
 	res.send('sesion uid: ' + session.getSessionUser(req).uid);
 };
 
+exports.signup = function(req,res){
+	res.render('admin/signup');
+};
+
 
 exports.loginGeneral = function(req, res) {
 //	var uid = req.body.uid;
@@ -34,7 +38,6 @@ exports.loginGeneral = function(req, res) {
 //	var phone = req.body.phone;
 //	var meteringDay = req.body.meteringDay;
 //	var maxLimitUsageBill = req.body.maxLimitUsageBill;
-	
 	var uid = 'def';
 	var nickName = 'ffff';
 	var email = '2#';
@@ -52,23 +55,42 @@ exports.loginGeneral = function(req, res) {
 		maxLimitUsageBill : maxLimitUsageBill,
 		userType : userType
 	}
-	
-	console.log(user);
-	var accessToken = 'ad9dd193010e1d9e110e4f3a87826504ed59b9ed612be38a311d9d2d73894bcd';
-//	var get_options = {
-//		host: 'closure-compiler.appspot.com',
-//		port: '80',
-//		path: '/compile',
-//		method: 'POST',
-//		headers: {
-//			'Content-Type': 'application/x-www-form-urlencoded',
-//		}
-//	};
-	
-	
-	session.setSessionUser(req, user);
-	
+
+	var get_options = {
+		host: 'closure-compiler.appspot.com',
+		port: '80',
+		path: '/compile',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(post_data)
+		}
+	};
+
 	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
+		if (err) {
+			console.error(err);
+		}
+		else {
+			console.log(user);
+			session.setSessionUser(req, user);
+			res.send('1');
+		}
+	});
+};
+
+exports.admin = function(req,res){
+	res.render('admin/signup');
+};
+
+exports.adminAdd = function(req,res){
+	var userAuthCode = {
+		authCode:"test",
+		accessToken:"test",
+		nickName:"할매"
+	}
+	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
+>>>>>>> c43477dbb8dbae0f262f22a74dc1a5d2037915ff
 		if (err) {
 			console.error(err);
 		}
