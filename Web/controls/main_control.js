@@ -24,7 +24,7 @@ exports.test = function(req, res) {
 };
 
 exports.session = function(req, res) {
-	res.send('sesion uid: ' + session.getSessionUser(req).uid);
+	res.send('sesion uid: ' + session.getSessionUser(req));
 };
 
 exports.signup = function(req,res){

@@ -8,25 +8,10 @@ var DEVICE_ID;
  * req:
  */
 exports.donate = function(req, res) {
-	var amount = req.body.ammount;
+	var amount = req.body.amount;
 
 	var user = session.getSessionUser(req);
 
-	mysqlMapper.getNextReceiver(function(result){
-		var uid = result.uid;
-
-	});
-};
-
-
-/*
- * req:
- */
-function addToReceiverList(uid, callback) {
-
-	var amount = 400;
-
-	var user = session.getSessionUser(req);
 	var uidFrom = user.uid;
 
 	mysqlMapper.getNextReceiver(function(err, result){
@@ -55,6 +40,7 @@ function addToReceiverList(uid, callback) {
 											console.error(err);
 										}
 										else {
+											console.log(result[0]);
 											res.json(result);
 										}
 									});
@@ -68,14 +54,21 @@ function addToReceiverList(uid, callback) {
 	});
 };
 
+exports.testApi = function(req, res){
+	var accessToken = getAccessToken(req);
+	sendApiByName('realtimeUsage', accessToken, function(result){
+		res.json({status:200, responseData : result});
+	});
+}
+
 exports.startWriteRealtimeUsage = function(req, res){
-	if(session.getSessionUser()){
-
-		intervalRealtimeUsage = setInterval(function(str1, str2) {
-			console.log(str1 + " " + str2);
-		}, 2000, "Hello.", "How are you?");
-
-		res.json({status:200, responseData : "not login user"});
+	var accessToken = getAccessToken(req);
+	if(accessToken){
+		intervalRealtimeUsage = setInterval(function() {
+			sendApiByName('realtimeUsage', accessToken, function(result){
+				res.json({status:200, responseData : result});
+			});
+		}, 2000);
 	}
 	else{
 		res.json({status:200, responseData : "startWriteRealtimeUsage"});
@@ -90,14 +83,8 @@ exports.stopWriteRealtimeUsage = function(req, res){
 	res.json({status:200, responseData : "stopWriteRealtimeUsage"});
 };
 
-exports.testApi = function(req, res){
-	sendApiByName('realtimeUsage', function(result){
-		res.json({status:200, responseData : result});
-	});
-}
-
-var getAccessToken = function(){
-	var accessToken = null, sessionUser = session.getSessionUser();
+var getAccessToken = function(req){
+	var accessToken = null, sessionUser = session.getSessionUser(req);
 	if(sessionUser){
 		accessToken = sessionUser.accessToken;
 	}
@@ -155,8 +142,7 @@ var sendApiRequest = function(apiName, accessToken, deviceId, f){
 	}
 }
 
-var sendApiByName = function(apiName, f){
-	var accessToken = getAccessToken();
+var sendApiByName = function(apiName, accessToken, f){
 	var deviceId = DEVICE_ID;
 
 	if(accessToken){
