@@ -21,7 +21,6 @@ exports.donate = function(req, res) {
  * req:
  */
 function addToReceiverList(uid, callback) {
-	mysqlMapper.addToReceiverList(uid, function(err, result){
 
 	var amount = 400;
 
@@ -49,7 +48,14 @@ function addToReceiverList(uid, callback) {
 									console.error(err);
 								}
 								else {
-									res.send("1");
+									mysqlMapper.getUserByUid(uidTo, function(err, result){
+										if (err){
+											console.error(err);
+										}
+										else {
+											res.json(result);
+										}
+									});
 								}
 							});
 						}

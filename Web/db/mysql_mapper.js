@@ -18,6 +18,11 @@ connection.connect(function(err) {
 	}
 });
 
+exports.getUserByUid = function(uid, callback) {
+	var query = connection.query('SELECT * FROM users WHERE uid = ?', [uid], function(err, result){
+		callback(err, result);
+	});
+}
 
 exports.insertOrUpdateOnExist = function(user, callback) {
 	var query = connection.query("INSERT INTO users (uid, nickName, email, phone, meteringDay, maxLimitUsageBill, userType) VALUES " + 

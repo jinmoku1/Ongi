@@ -73,16 +73,23 @@ exports.loginGeneral = function(req, res) {
 			console.error(err);
 		}
 		else {
-			mysqlMapper.addToDonorList(user, function(err, result){
+			mysqlMapper.getUserByUid(user.uid, function(err, result){
+				if (result == undefined){
+					mysqlMapper.addToDonorList(user, function(err, result){
+					});
+					if (user.userType == 'O'){
+						mysqlMapper.addToReceiverList(user, function(err, result){
+							res.send('1:O');
+						});
+					}
+					else {
+						res.send('0')
+					}
+				}
+				else {
+					res.send('1');
+				}
 			});
-			if (user.userType == 'O'){
-				mysqlMapper.addToReceiverList(user, function(err, result){
-					res.send('1:O');
-				});
-			}
-			else {
-				res.send('0')
-			}
 		}
 	});
 };
