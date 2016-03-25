@@ -16,7 +16,7 @@ var api = require('./controls/api_control');
  */
 exports.route = function (app) {
 	// account (user)
-	app.get('/', mainControl.index);
+	app.get('/', main.index);
 	app.get('/session', main.session);
 	app.post('/loginGeneral', main.loginGeneral);
 	app.get('/admin/signup', main.admin);

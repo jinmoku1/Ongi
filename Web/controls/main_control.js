@@ -54,3 +54,19 @@ exports.loginGeneral = function(req, res) {
 exports.admin = function(req,res){
 	res.render('admin/signup');
 };
+
+exports.adminAdd = function(req,res){
+	var userAuthCode = {
+		authCode:"test",
+		accessToken:"test",
+		nickName:"할매"
+	}
+	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
+		if (err) {
+			console.error(err);
+		}
+		console.log(user);
+		session.setSessionUser(req, user);
+		res.send('1');
+	});
+};
