@@ -67,14 +67,24 @@ exports.loginGeneral = function(req, res) {
 		}
 	};
 
-	mysqlMapper.insertOrUpdateOnExist(user, function(err, result){
+	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
 		if (err) {
 			console.error(err);
 		}
 		else {
-			console.log(user);
-			session.setSessionUser(req, user);
-			res.send('1');
+			if (user.userType == 'O'){
+				mysqlMapper.addToReceiverList(user, function(err, result){
+					res.send('1:O');
+				})
+			}
+			else if (user.userType == 'N') {
+				mysqlMapper.addToDonorList(user, function(err, result){
+					res.send('1:N');
+				})
+			}
+			else {
+				res.send('0')
+			}
 		}
 	});
 };
@@ -89,23 +99,4 @@ exports.adminAdd = function(req,res){
 		accessToken:"test",
 		nickName:"할매"
 	}
-	mysqlMapper.insertOrUpdateOnExist(userAuthCode, function(err, result){
->>>>>>> c43477dbb8dbae0f262f22a74dc1a5d2037915ff
-		if (err) {
-			console.error(err);
-		}
-		if (user.userType == 'O'){
-			mysqlMapper.addToReceiverList(user, function(err, result){
-				res.send('1:O');
-			})
-		}
-		else if (user.userType == 'N') {
-			mysqlMapper.addToDonorList(user, function(err, result){
-				res.send('1:N');
-			})
-		}
-		else {
-			res.send('0')
-		}
-	});
 };
