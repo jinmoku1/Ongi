@@ -1,7 +1,7 @@
 /**
  * This is the module that is executed to run the whole application. This module sets up the express framework
  * and basic server configurations, and starts the routing.
- * 
+ *
  * @module app
  */
 
@@ -14,7 +14,6 @@ var logger = require('express-logger');
 var favicon = require('express-favicon');
 var bodyParser = require('body-parser');
 var errorHandler = require('express-error-handler');
-
 
 
 // extended requirement
@@ -49,4 +48,3 @@ router.route(app);
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
-

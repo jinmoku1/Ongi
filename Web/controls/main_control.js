@@ -4,6 +4,7 @@
 var querystring = require('querystring');
 var http = require('http');
 var utf8 = require('utf8');
+var fs = require('fs');
 
 var mysqlMapper = require('../db/mysql_mapper');
 var session = require('../session');
@@ -116,30 +117,31 @@ exports.admin = function(req,res){
 
 exports.adminAdd = function(req,res){
 
+	console.log(req.file.path);
+	console.log(req.file.type);
 	var nickName = req.query.nickName;
 	var phoneNumber = req.query.phoneNumber;
 	var email = req.query.email;
-	var imageUrl = req.query.imageUrl;
 	var accessToken = req.query.access_token;
 	var authCode = req.query.auth_code;
+	var file = __dirname + "/" + req.file.name;
+	var pictureUrl = req.file.path;
 
-	console.log(nickName);
-	console.log(authCode);
+	fs.readFile( req.file.path, function (err, data) {
+			 fs.writeFile(file, data, function (err) {
 
-	var userAuthCode = {
-		authCode:authCode,
-		accessToken:accessToken,
-		nickName:nickName,
-		identification:nickName+accessToken
-	}
+					console.log(nickName);
+					console.log(phoneNumber);
+					console.log(email);
+					console.log(accessToken);
+					console.log(authCode);
+					console.log(pictureUrl);
 
-	mysqlMapper.insertAccessToken(userAuthCode, function(err, result){
-		if (err) {
-			console.error(err);
-		}
-		console.log(userAuthCode);
-		session.setSessionUser(req, userAuthCode);
-		res.send('1');
+
+			});
 	});
+
+
+
 
 };

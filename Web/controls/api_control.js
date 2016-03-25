@@ -3,6 +3,9 @@ var session = require('../session');
 var http = require('http');
 var intervalRealtimeUsage;
 var request = require('request');
+var multer = require('multer');
+
+var upload = multer({ dest: 'uploads/' })
 
 /*
  * req:
