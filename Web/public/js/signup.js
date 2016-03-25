@@ -7,7 +7,7 @@ var DEVICE_ID;
 
 var CLIENT_ID = "aHl1bm1pbjkwQGdtYWlsLmNvbV9Pbmdp";
 var CLIENT_SECRET = "gh17e4rk5gr86o8gs9dw9gn0xi8t452y72x1p68";
-var REDIRECT_URI = "http://localhost:3000/admin/signup/add";
+var REDIRECT_URI= "http://localhost:3000/admin/signup";
 
 // Define String.startsWith method
 if (!String.prototype.startsWith)
@@ -25,9 +25,22 @@ function initialize()
 {
     // Check if there's an auth code passed in the URL
     parseAuthCodeFromUrl();
+    updateAccessTokenFromAuthCode();
+
 }
 
+function sendDataTo(){
 
+  var currentUri = window.location.href;
+  var nickName = currentUri.split("lg_name=")[1];
+  nickName = nickName.substring(0,nickName.indexOf('?'));
+  $.ajax({
+      url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName,
+      success:function(data) {
+      }
+  });
+
+}
 /*************************
  * AUTHENTICATION SECTION
  *************************/
@@ -55,7 +68,8 @@ function enertalkLogin()
         appVersionParam +
         backUrlParam;
 
-    window.open(loginUri, '_blank', 'location-no');
+    window.open(loginUri, '_blank');
+    window.close();
 }
 
 /**
@@ -63,15 +77,15 @@ function enertalkLogin()
  */
 function parseAuthCodeFromUrl()
 {
-    var expectedUrl = "http://localhost:3000/admin/signup/add";
+    var expectedUrl = "http://localhost:3000/admin/signup";
 
-    var currentUri = expectedUrl;
+    var currentUri = window.location.href;
     console.log(": " + currentUri);
 
     if (currentUri.startsWith(expectedUrl))
     {
         AUTH_CODE = currentUri.split("code=")[1];
-
+        console.log(AUTH_CODE);
         // Update html page with retrieved token info
         updateLoginAndTokenElements();
     }
@@ -109,7 +123,6 @@ function updateAccessTokenFromAuthCode()
             ACCESS_TOKEN = response.access_token;
             console.log("Access Token: " + ACCESS_TOKEN);
 
-
         }
     }
 
@@ -118,12 +131,13 @@ function updateAccessTokenFromAuthCode()
     httpRequest.open("POST", tokenUrl);
     httpRequest.setRequestHeader("Content-Type", "application/json");
 
-    var postData = JSON.stringify(
-    {
+    var postData = JSON.stringify({
+
         client_id: "aHl1bm1pbjkwQGdtYWlsLmNvbV9Pbmdp",
         client_secret: "gh17e4rk5gr86o8gs9dw9gn0xi8t452y72x1p68",
         grant_type: 'authorization_code',
         code: AUTH_CODE
+
     });
 
     httpRequest.send(postData);
