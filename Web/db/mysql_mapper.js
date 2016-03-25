@@ -169,3 +169,20 @@ exports.insertUserUsage = function(uid, usage, callback) {
 	});
 }
 
+exports.insertUserHistory = function(userId, usage, count, callback) {
+	var query = connection.query("INSERT INTO user_history (userId, activePower, count) VALUES " +
+		"(?, ?, ?) " +
+		"ON DUPLICATE KEY UPDATE " +
+		"activePower = ?, " +
+		"count = ?", [userId, usage.activePower, count, usage.activePower, count], function(err, result){
+		callback(err, result);
+	});
+}
+
+exports.getUserHistory = function(userId, callback) {
+	var query = connection.query('SELECT * FROM user_history WHERE userId = ?',
+		userId, function(err, result){
+			callback(err, result);
+		});
+}
+

@@ -39,8 +39,19 @@ function sendDataTo(){
   phoneNumber = phoneNumber.substring(0,phoneNumber.indexOf('?'));
   email = email.substring(0,email.indexOf('?'));
   nickName = nickName.substring(0,nickName.indexOf('?'));
+  address = address.substring(0,address.indexOf('?'));
+
+  var file = $('#file').get(0).files[0];
+  var fd = new FormData();
+
+  fd.append('file', file);
+
   $.ajax({
-      url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName+"&phoneNumber="+phoneNumber+"&email="+email+"&imageUrl=https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xlt1/v/t1.0-1/p320x320/1236535_10205449882901757_8514850005239888677_n.jpg?oh=a6964b02468312911da9434c9835c40c&oe=5780D998&__gda__=1468423220_e0c108730e99ad82678a9a34fe6e90ec",
+      url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName+"&phoneNumber="+phoneNumber+"&email="+email,
+      data: fd,
+      processData: false,
+      contentType: false,
+      type: 'POST',
       success:function(data) {
       }
   });
@@ -59,7 +70,10 @@ function enertalkLogin()
     var clientIdParam = "?client_id=" + CLIENT_ID;
     var userName = $('#lg_name').val();
     var userAddress = $('#lg_address').val();
-    var redirectUriParam = "&redirect_uri=" + REDIRECT_URI+"?lg_name="+userName+"?lg_address="+userAddress;
+    var email = $('#lg_email').val();
+    var phoneNumber = $('#lg_phoneNo').val();
+
+    var redirectUriParam = "&redirect_uri=" + REDIRECT_URI+"?lg_name="+userName+"?lg_address="+userAddress+"?lg_email="+email+"?lg_phoneNo="+phoneNumber;
 
     var responseTypeParam = "&response_type=code";
     var appVersionParam = "&app_version=web";

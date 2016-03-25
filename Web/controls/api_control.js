@@ -3,6 +3,9 @@ var session = require('../session');
 var http = require('http');
 var intervalRealtimeUsage;
 var request = require('request');
+var multer = require('multer');
+
+var upload = multer({ dest: 'uploads/' })
 
 var apn = require('apn');
 
@@ -61,7 +64,7 @@ exports.testApi = function(req, res){
 	var accessToken = getAccessToken(req);
 	var deviceId = getDeviceId(req);
 
-	accessToken = '1c8e6ca7bc846307e7a93ddb12ec71cfc970b0fd107acd71f80028d4cf8ef2081541735193d3fabefcb4039a8aa14f3a99e1abf7c7d13ef516062ed91bf49d3a';
+  accessToken = '1c8e6ca7bc846307e7a93ddb12ec71cfc970b0fd107acd71f80028d4cf8ef2081541735193d3fabefcb4039a8aa14f3a99e1abf7c7d13ef516062ed91bf49d3a';
 	deviceId = '6A92ED86-E66B-11E5-9730-9A79F3FFF7B8';
 
 	sendApiByName('realtimeUsage', accessToken, deviceId, function(result){
