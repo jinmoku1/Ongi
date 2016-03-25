@@ -60,7 +60,6 @@ exports.updateReceiverList = function(uid, delta_amount, callback) {
 								[delta_amount, uid], function(err, result){
 		callback(err, result);
 	});
-	console.log('r: '+query.sql);
 }
 
 exports.addToDonorList = function(user, callback) {
@@ -78,7 +77,6 @@ exports.updateDonorList = function(uid, delta_amount, callback) {
 								[delta_amount, uid], function(err, result){
 		callback(err, result);
 	});
-	console.log('d: '+query.sql);
 }
 
 exports.makeDonation = function(uidFrom, uidTo, amount, callback) {

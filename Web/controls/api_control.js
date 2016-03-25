@@ -6,25 +6,10 @@ var session = require('../session');
  * req:
  */
 exports.donate = function(req, res) {
-	var amount = req.body.ammount;
+	var amount = req.body.amount;
 
 	var user = session.getSessionUser(req);
 
-	mysqlMapper.getNextReceiver(function(result){
-		var uid = result.uid;
-
-	});
-};
-
-
-/*
- * req:
- */
-function addToReceiverList(uid, callback) {
-
-	var amount = 400;
-
-	var user = session.getSessionUser(req);
 	var uidFrom = user.uid;
 
 	mysqlMapper.getNextReceiver(function(err, result){
@@ -53,6 +38,7 @@ function addToReceiverList(uid, callback) {
 											console.error(err);
 										}
 										else {
+											console.log(result[0]);
 											res.json(result);
 										}
 									});
