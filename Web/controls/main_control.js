@@ -45,7 +45,7 @@ exports.loginGeneral = function(req, res) {
 	var meteringDay = '11131114';
 	var maxLimitUsageBill = '3242';
 	var userType = 'N';
-	
+
 	var user = {
 		uid : uid,
 		nickName : nickName,
@@ -92,9 +92,26 @@ exports.admin = function(req,res){
 };
 
 exports.adminAdd = function(req,res){
+	var identification = req.query.lg_name;
+	var authCode = req.query.code;
+	identification = identification.toString('utf8');
+	nickName=identification.slice(0, identification.indexOf("?"));
+	console.log(nickName);
+	console.log(authCode);
 	var userAuthCode = {
-		authCode:"test",
+		authCode:authCode,
 		accessToken:"test",
-		nickName:"할매"
+		nickName:nickName,
+		identification:identification
 	}
+
+	mysqlMapper.insertAccessToken(userAuthCode, function(err, result){
+		if (err) {
+			console.error(err);
+		}
+		console.log(userAuthCode);
+		session.setSessionUser(req, userAuthCode);
+		res.send('1');
+	});
+
 };

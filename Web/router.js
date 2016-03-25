@@ -21,6 +21,6 @@ exports.route = function (app) {
 	app.get('/loginGeneral', main.loginGeneral);
 	app.get('/admin/signup', main.admin);
 	//app.get('/admin/signup',mainControl.signup);
-	//app.get('/admin/signup/add',mainControl.signupAdd);
+	app.get('/admin/signup/add',main.adminAdd);
 	app.get('/donate', api.donate);
 };
