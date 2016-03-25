@@ -141,7 +141,7 @@ exports.appPush = function(callback){
 	var apnConnection = new apn.Connection(options);
 
 
-	var token = ''
+	var token = '앞에서 Xcode로 build 하면서 획득한 아이폰 디바이스 토큰을 입력한다.'
 	var myDevice = new apn.Device(token);
 
 	var note = new apn.Notification();
