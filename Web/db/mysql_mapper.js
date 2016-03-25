@@ -5,8 +5,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host :'localhost',
 	port : 3306,
-	user : 'jinmoku',
-	password : '1234',
+	user : 'root',
+	password : '',
 	database:'web'
 });
 
@@ -20,14 +20,26 @@ connection.connect(function(err) {
 
 
 exports.insertOrUpdateOnExist = function(user, callback) {
-	var query = connection.query("INSERT INTO users (uid, nickName, email, phone, meteringDay, maxLimitUsageBill) VALUES " + 
+	var query = connection.query("INSERT INTO users (uid, nickName, email, phone, meteringDay, maxLimitUsageBill) VALUES " +
 			"(?, ?, ?, ?, ?, ?) " +
-			"ON DUPLICATE KEY UPDATE " + 
+			"ON DUPLICATE KEY UPDATE " +
 			"nickName=?, " +
 			"email=?, " +
 			"phone=?, " +
 			"meteringDay=?, " +
 			"maxLimitUsageBill=?", [user.uid, user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill, user.nickName, user.email, user.phone, user.meteringDay, user.maxLimitUsageBill], function(err, result){
+		callback(err, result);
+	});
+}
+
+exports.inserAccessToken = function(userAuthCode, callback) {
+	var query = connection.query("INSERT INTO userAccessToken (authCode, accessToken, nickName) VALUES " +
+			"(?, ?, ?) " +
+			"ON DUPLICATE KEY UPDATE " +
+			"authCode=?, " +
+			"accessToken=?, " +
+			"nickName=? "
+		, [userAuthCode.authCode, user.accessToken, user.nickName], function(err, result){
 		callback(err, result);
 	});
 }
