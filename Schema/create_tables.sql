@@ -12,10 +12,10 @@ create table users (
 );
 
 create table relations (
-    helper_id varchar(250) not null,
-    helpee_id varchar(250) not null,
-    primary key (helper_id, helpee_id),
-    foreign key (helper_id) references users(userId) on delete cascade
+    helperId varchar(250) not null,
+    helpeeId varchar(250) not null,
+    primary key (helperId, helpeeId),
+    foreign key (helperId) references users(userId) on delete cascade
 );
 
 create table receiver_list (
