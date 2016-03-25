@@ -46,7 +46,9 @@ exports.loginGeneral = function(req, res) {
 	var meteringDay = '11131114';
 	var maxLimitUsageBill = '3242';
 	var userType = 'N';
-
+	var accessToken = '1c8e6ca7bc846307e7a93ddb12ec71cfc970b0fd107acd71f80028d4cf8ef2081541735193d3fabefcb4039a8aa14f3a99e1abf7c7d13ef516062ed91bf49d3a';
+	
+	
 	var user = {
 		uid : uid,
 		nickName : nickName,

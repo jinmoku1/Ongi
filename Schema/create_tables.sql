@@ -1,5 +1,3 @@
-use web
-
 create table users (
     uid varchar(250) primary key not null,
     nickName varchar(250) not null,
@@ -29,6 +27,7 @@ create table donation_list (
     uidTo varchar(250) not null,
     amount double not null,
     id int primary key not null auto_increment,
+    time_donated timestamp DEFAULT CURRENT_TIMESTAMP,
     index(uidFrom),
     index(uidTo)
 );
@@ -39,3 +38,4 @@ create table userAuthCode (
   nickName varchar(250) not null,
   identification varchar(250) not null
 );
+
