@@ -42,7 +42,7 @@ create table donation_list (
     index(userIdTo)
 );
 
-create table userAuthCode (
+create table user_basic_info (
     userId varchar(250) primary key not null,
     accessToken varchar(250) not null,
     deviceId varchar(250) not null
