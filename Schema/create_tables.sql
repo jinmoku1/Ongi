@@ -62,3 +62,11 @@ create table userUsage (
   powerBase int,
   index(uid)
 );
+
+create table user_history (
+  userId varchar(250) primary key not null,
+  activePower int,
+  count int DEFAULT 0 not null,
+  regDttm timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
