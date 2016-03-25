@@ -29,6 +29,22 @@ function initialize()
 
 }
 
+function fillInData(){
+  var currentUri2 = window.location.href;
+  var nickName = currentUri2.split("lg_name=")[1];
+  var address = currentUri2.split("lg_address=")[1];
+  var phoneNumber = currentUri2.split("lg_phoneNo=")[1];
+  var email = currentUri2.split("lg_email=")[1];
+  phoneNumber = phoneNumber.substring(0,phoneNumber.indexOf('?'));
+  email = email.substring(0,email.indexOf('?'));
+  nickName = nickName.substring(0,nickName.indexOf('?'));
+  address = address.substring(0,address.indexOf('?'));
+  $("#lg_name").val(nickName);
+  $("#lg_address").val(address);
+  $("#lg_email").val(email);
+  $("#lg_phoneNo").val(phoneNumber);
+}
+
 function sendDataTo(){
 
   var currentUri = window.location.href;
@@ -141,7 +157,7 @@ function updateAccessTokenFromAuthCode()
 
             ACCESS_TOKEN = response.access_token;
             console.log("Access Token: " + ACCESS_TOKEN);
-
+            fillInData();
         }
     }
 
