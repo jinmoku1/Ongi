@@ -14,3 +14,6 @@ exports.index = function(req, res) {
 	});
 //	res.send('Hello World!');
 };
+exports.signup = function(req,res){
+	res.render('admin/signup');
+};
