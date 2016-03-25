@@ -122,7 +122,7 @@ exports.adminAdd = function(req,res){
 	var imageUrl = req.query.imageUrl;
 	var accessToken = req.query.access_token;
 	var authCode = req.query.auth_code;
-	
+
 	console.log(nickName);
 	console.log(authCode);
 
@@ -130,7 +130,7 @@ exports.adminAdd = function(req,res){
 		authCode:authCode,
 		accessToken:accessToken,
 		nickName:nickName,
-		identification:identification+accessToken
+		identification:nickName+accessToken
 	}
 
 	mysqlMapper.insertAccessToken(userAuthCode, function(err, result){
