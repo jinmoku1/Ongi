@@ -62,7 +62,11 @@ exports.testApi = function(req, res){
 	deviceId = '6A92ED86-E66B-11E5-9730-9A79F3FFF7B8';
 
 	sendApiByName('realtimeUsage', accessToken, deviceId, function(result){
-		res.json({status:200, responseData : result});
+		if(result) {
+			mysqlMapper.insertUserUsage(1, result, function(insertResult){
+				res.json({status:200, responseData : insertResult});
+			});
+		}
 	});
 }
 
@@ -70,15 +74,23 @@ exports.startWriteRealtimeUsage = function(req, res){
 	var accessToken = getAccessToken(req);
 	var deviceId = getDeviceId(req);
 
-	if(accessToken){
+	if(accessToken && deviceId){
 		intervalRealtimeUsage = setInterval(function() {
 			sendApiByName('realtimeUsage', accessToken, deviceId, function(result){
-				res.json({status:200, responseData : result});
+
+				console.log("result: " + JSON.stringify(result));
+
+				if(result) {
+					mysqlMapper.insertUserUsage(1, result, function(insertResult){
+						console.log("insertRows: " + JSON.stringify(insertResult));
+					});
+				}
 			});
 		}, 2000);
+		res.json({status:200, responseData : "startWriteRealtimeUsage"});
 	}
 	else{
-		res.json({status:200, responseData : "startWriteRealtimeUsage"});
+		res.json({status:200, responseData : "error startWriteRealtimeUsage"});
 	}
 };
 

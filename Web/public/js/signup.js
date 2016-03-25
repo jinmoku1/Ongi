@@ -33,9 +33,14 @@ function sendDataTo(){
 
   var currentUri = window.location.href;
   var nickName = currentUri.split("lg_name=")[1];
+  var address = currentUri.split("lg_address=")[1];
+  var phoneNumber = currentUri.split("lg_phoneNo=")[1];
+  var email = currentUri.split("lg_email=")[1];
+  phoneNumber = phoneNumber.substring(0,phoneNumber.indexOf('?'));
+  email = email.substring(0,email.indexOf('?'));
   nickName = nickName.substring(0,nickName.indexOf('?'));
   $.ajax({
-      url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName,
+      url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName+"&phoneNumber="+phoneNumber+"&email="+email+"&imageUrl=https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xlt1/v/t1.0-1/p320x320/1236535_10205449882901757_8514850005239888677_n.jpg?oh=a6964b02468312911da9434c9835c40c&oe=5780D998&__gda__=1468423220_e0c108730e99ad82678a9a34fe6e90ec",
       success:function(data) {
       }
   });

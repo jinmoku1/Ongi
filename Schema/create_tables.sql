@@ -48,5 +48,17 @@ create table userAuthCode (
     deviceId varchar(250) not null
 );
 
-
-
+create table userUsage (
+  id int auto_increment primary key not null,
+  uid varchar(250),
+  `timestamp` timestamp default CURRENT_TIMESTAMP,
+  voltage int,
+  `current` int,
+  activePower int,
+  apparentPower int,
+  reactivePower int,
+  powerFactor int,
+  wattHour int,
+  powerBase int,
+  index(uid)
+);
