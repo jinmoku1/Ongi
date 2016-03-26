@@ -49,6 +49,14 @@ exports.admin = function(req,res){
 	res.render('admin/signup');
 };
 
+exports.ranking = function(req,res){
+
+	mysqlMapper.getAllHelpees(function(err,result){
+			res.render('admin/ranking',{ranking:result});
+	});
+
+};
+
 exports.adminAdd = function(req, res){
 //	var accessToken = req.query.access_token;
 //	var helperEmail = req.query.helper_email;
@@ -60,7 +68,7 @@ exports.adminAdd = function(req, res){
 	var address = req.query.address;
 	var file = __dirname + "/" + req.file.name;
 	var imageUrl = req.file.path;
-	
+
 
 	api.retrieveUser(accessToken, function(userHelpee){
 		if (userHelpee == null){
