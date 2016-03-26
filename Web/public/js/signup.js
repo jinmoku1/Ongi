@@ -61,7 +61,7 @@ function sendDataTo(){
   var fd = new FormData();
 
   fd.append('file', file);
-
+  
   $.ajax({
       url:"http://localhost:3000/admin/signup/add?auth_code="+AUTH_CODE+"&access_token="+ACCESS_TOKEN+"&nickName="+nickName+"&phoneNumber="+phoneNumber+"&email="+email,
       data: fd,

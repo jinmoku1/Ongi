@@ -26,6 +26,7 @@ exports.route = function (app) {
 	app.get('/session', main.session);
 	app.get('/loginGeneral', main.loginGeneral);
 	app.get('/deviceUsage', main.deviceUsage);
+	app.get('/myHelpees', main.myHelpees);
 	app.get('/admin/signup', main.admin);
 	app.get('/admin/ranking',main.ranking);
 	app.post('/admin/signup/add',upload.single('file'),main.adminAdd);

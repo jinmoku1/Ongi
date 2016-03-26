@@ -22,13 +22,14 @@
       </tr>
     </thead>
     <tbody>
-      <%for (var result in ranking){%>
+    
+      <% ranking.forEach(function(result){ %>
         <tr>
-                 <td><%=result.nickName%></td>
-                 <td><%=result.userName%></td>
-                 <td><%=result.address%></td>
-                 <td><%=result.total_amount_received%></td>
-          <%}%>
+                 <td><%= result.nickName %></td>
+                 <td><%= result.userName %></td>
+                 <td><%= result.address %></td>
+                 <td><%= result.total_amount_received %></td>
+    	<% }) %>
          </tr>
     </tbody>
     </table>

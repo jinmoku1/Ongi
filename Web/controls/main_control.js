@@ -55,7 +55,7 @@ exports.monthlyDonations = function(req, res) {
 	});
 }
 
-exports.myHelpers = function(req, res) {
+exports.myHelpees = function(req, res) {
 	var user = session.getSessionUser(req);
 	mysqlMapper.getMyHelpees(user.userId, function(err, result){
 		res.json(result);
@@ -69,6 +69,7 @@ exports.admin = function(req,res){
 exports.ranking = function(req,res){
 
 	mysqlMapper.getAllHelpees(function(err,result){
+			console.log(result[0].nickName);
 			res.render('admin/ranking',{ranking:result});
 	});
 
