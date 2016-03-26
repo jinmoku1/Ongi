@@ -24,11 +24,12 @@ exports.route = function (app) {
 	// account (user)
 	app.get('/', main.index);
 	app.get('/session', main.session);
-	app.post('/loginGeneral', main.loginGeneral);
+	app.get('/loginGeneral', main.loginGeneral);
+	app.get('/deviceUsage', main.deviceUsage);
 	app.get('/admin/signup', main.admin);
 	app.post('/admin/signup/add',upload.single('file'),main.adminAdd);
 	app.get('/test', main.test);
-	app.post('/donate', api.donate);
+	app.get('/donate', api.donate);
 
 
 };

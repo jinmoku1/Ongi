@@ -14,7 +14,7 @@ var apn = require('apn');
  * req:
  */
 exports.donate = function(req, res) {
-	var amount = req.body.amount;
+	var amount = req.query.amount;
 
 	var user = session.getSessionUser(req);
 
@@ -76,7 +76,7 @@ exports.testApi = function(req, res){
 	});
 }
 
-exports.retrieveDeviceId = function(accessToken, f){
+var retrieveDeviceId = function(accessToken, f){
 	if(accessToken) {
 		var options = {
 			method: 'GET',
@@ -102,10 +102,10 @@ exports.retrieveDeviceId = function(accessToken, f){
 		f(null)
 	}
 }
+exports.retrieveDeviceId = retrieveDeviceId;
 
 exports.retrieveUser = function(accessToken, f){
 	if (accessToken) {
-		console.log("fajsdiofdsjf");
 		var options = {
 			method: 'GET',
 			url: 'https://api.encoredtech.com/1.2/me',
@@ -122,6 +122,19 @@ exports.retrieveUser = function(accessToken, f){
 			else{
 				f(error);
 			}
+		});
+	}
+	else{
+		f(null)
+	}
+}
+
+exports.getUsage = function(accessToken, f){
+	if (accessToken) {
+		retrieveDeviceId(accessToken, function(deviceId){
+			sendApiByName('meteringUsage', accessToken, deviceId, function(result){
+				f(result);
+			});
 		});
 	}
 	else{

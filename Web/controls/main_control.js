@@ -13,9 +13,9 @@ exports.index = function(req, res) {
 	res.send('hello world: ');
 };
 exports.test = function(req, res) {
-	api.appPush({userId: '1'},function(){
-		res.send("success");
-	})
+	mysqlMapper.getAllHelpees(function(err, result){
+		res.json(result);
+	});
 };
 
 exports.session = function(req, res) {
@@ -28,17 +28,39 @@ exports.signup = function(req,res){
 
 
 exports.loginGeneral = function(req, res) {
-	var accessToken = req.body.accessToken;
+	var accessToken = req.query.accessToken;
+	console.log(req.query.accessToken);
 	accessToken = '7c1cd40ae008fe2e6b85f3eb5c6538fa0bd7b7349cfdcf2f2b02e95beafa2829aed40834e1aa3aac7735d58924af8b369fab7c9fe119da0ae7f0b4799853b1aa';
 
 	api.retrieveUser(accessToken, function(user){
 		console.log(user);
 		user.userType = 'N';
 		addUser(req, user, function(exists){
-			res.send('1');
+			res.json(user);
 		});
 	});
 };
+
+exports.deviceUsage = function(req, res) {
+	var accessToken = req.query.accessToken;
+	api.getUsage(accessToken, function(result){
+		res.json(result);
+	});
+}
+
+exports.monthlyDonations = function(req, res) {
+	var user = session.getSessionUser(req);
+	mysqlMapper.getMyDonations(user.userId, function(err, result){
+		res.json(result);
+	});
+}
+
+exports.myHelpers = function(req, res) {
+	var user = session.getSessionUser(req);
+	mysqlMapper.getMyHelpees(user.userId, function(err, result){
+		res.json(result);
+	});
+}
 
 exports.admin = function(req,res){
 	res.render('admin/signup');

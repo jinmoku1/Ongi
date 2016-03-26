@@ -29,7 +29,8 @@ var setIntervalRealtimeUsage = function(userId, accessToken, deviceId){
 							}, function(){
 							})
 
-							mysqlMapper.initCountUserHistory(userId);
+							mysqlMapper.initCountUserHistory(userId, function(err, result){
+							});
 						}
 						else{
 							mysqlMapper.insertUserHistory(userId, result, count, function(err, result){
@@ -48,7 +49,7 @@ var checkActivePowerInterval = function(userId, usage, f){
 		mysqlMapper.getUserHistory(userId, function (err, result) {
 			var history = result[0];
 			if (history) {
-				console.log("history: " + JSON.stringify(history));
+//				console.log("history: " + JSON.stringify(history));
 				var pastActivePower = history.activePower;
 				var pastCount = history.count;
 
@@ -91,7 +92,7 @@ var sendApiRequest = function(apiName, accessToken, deviceId, f){
 				f(result);
 			}
 			else{
-				console.log(response.statusCode);
+//				console.log(response.statusCode);
 				f(response)
 			}
 		}
@@ -113,3 +114,5 @@ var sendApiByName = function(apiName, accessToken, deviceId, f){
 		f(null);
 	}
 }
+
+exports.sendApiByName = sendApiByName;
